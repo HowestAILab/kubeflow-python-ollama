@@ -130,18 +130,24 @@ EXPOSE 8888
 
 # ===============================================================================================
 
-
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
+# ===============================================================================================
+
+# Start Ollama server (default port 11434)
+RUN ollama serve
 
 # ===============================================================================================
 
+# Pull llama3.1 model
+RUN ollama pull llama3.1
 
-# Install Python
-RUN apt-get update && apt-get -yq install --no-install-recommends python3 python3-venv && alias python=python3
+# ===============================================================================================
+
+# Install Python & dev tools
+RUN apt-get update && apt-get -yq install --no-install-recommends python3 python3.12-dev build-essential g++ cmake ninja-build python3-venv && alias python=python3
 RUN python3 -m venv ${HOME}/.venv
-
 
 # ===============================================================================================
 
