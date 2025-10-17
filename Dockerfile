@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM nvidia/cuda:13.0.1-base-ubuntu24.04
 
 # Variables (in Kubeflow, the default volume mount path is set to home/jovyan, so we pick the same username)
 ENV NB_USER=jovyan
@@ -19,9 +19,9 @@ ENV HOME_TMP=/tmp_home/$NB_USER
 
 # Build arguments
 ARG TARGETARCH
-ARG KUBECTL_VERSION=v1.31.6
+ARG KUBECTL_VERSION=v1.34.1
 ARG S6_VERSION=v3.2.0.2
-ARG CODESERVER_VERSION=4.96.4
+ARG CODESERVER_VERSION=v4.104.3
 
 # Allow root access in container
 USER root
@@ -119,7 +119,7 @@ RUN find /etc/cont-init.d /etc/services.d -type f -print0 | xargs -0 -r dos2unix
 
 
 # Install VSCode server
-RUN curl -fsSL "https://github.com/coder/code-server/releases/download/v${CODESERVER_VERSION}/code-server_${CODESERVER_VERSION}_${TARGETARCH}.deb" -o /tmp/code-server.deb \
+RUN curl -fsSL "https://github.com/coder/code-server/releases/download/${CODESERVER_VERSION}/code-server_${CODESERVER_VERSION}_${TARGETARCH}.deb" -o /tmp/code-server.deb \
  && dpkg -i /tmp/code-server.deb || true \
  && apt-get -yq update \
  && apt-get -yq -f install --no-install-recommends \
