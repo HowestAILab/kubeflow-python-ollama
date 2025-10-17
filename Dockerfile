@@ -139,9 +139,8 @@ RUN curl -fsSL https://ollama.com/install.sh | sh
 
 
 # Install Python
-RUN apt-get update && apt-get -yq install --no-install-recommends python3 python3-venv && alias python=python3
-RUN python3 -m venv ${HOME}/.venv
-
+RUN apt-get update && apt-get -yq install --no-install-recommends python3 python3-venv
+RUN alias python=python3
 
 # ===============================================================================================
 
